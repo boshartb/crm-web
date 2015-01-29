@@ -7,6 +7,7 @@ require 'pry'
 $rolodex = Rolodex.new
 $rolodex.add_contact(Contact.new("Yehuda", "Katz", "yehuda@example.com", "Developer"))
 
+
 get '/' do
   @crm_app_name = "My CRM"
   erb :index
@@ -28,12 +29,11 @@ get '/contacts/new' do
   erb :new_contact
 end
 
-#/contacts/1001
-#/contacts/1004
-get '/contacts/:id' do # to locate
-  id = params[:id]
-  #look up the particular contact in the rolodex, by id
-  @contact = $rolodex.find_contact(id)
-
-  erb :contact_details
+get "/contacts/:id" do
+  @contact = $rolodex.find(params[:id].to_i)
+  if !@contact.nil?
+    erb :show_contact
+  else
+    raise Sinatra::NotFound
+  end
 end
