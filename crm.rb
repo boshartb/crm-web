@@ -37,3 +37,9 @@ get "/contacts/:id" do
     raise Sinatra::NotFound
   end
 end
+#  if @contact
+#     erb :show_contact
+#   else
+#     raise Sinatra::NotFound
+#   end
+# end
