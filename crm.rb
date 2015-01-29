@@ -5,7 +5,6 @@ require "sinatra/reloader"
 require 'pry'
 
 $rolodex = Rolodex.new
-$rolodex.add_contact(Contact.new("Yehuda", "Katz", "yehuda@example.com", "Developer"))
 
 
 get '/' do
@@ -29,6 +28,7 @@ get '/contacts/new' do
   erb :new_contact
 end
 
+
 get "/contacts/:id" do
   @contact = $rolodex.find(params[:id].to_i)
   if !@contact.nil?
@@ -37,9 +37,23 @@ get "/contacts/:id" do
     raise Sinatra::NotFound
   end
 end
-#  if @contact
-#     erb :show_contact
-#   else
-#     raise Sinatra::NotFound
-#   end
-# end
+
+
+get "/contacts/:id/edit" do
+  @contact = $rolodex.find(params[:id].to_i)
+  if @contact
+    erb :edit_contact
+  else
+    raise Sinatra::NotFound
+  end
+end
+
+delete "/contacts/:id" do
+  @contact = $rolodex.find(params[:id].to_i)
+  if @contact
+    $rolodex.remove_contact(@contact)
+    redirect to("/contacts")
+  else
+    raise Sinatra::NotFound
+  end
+end
