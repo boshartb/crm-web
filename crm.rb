@@ -1,4 +1,3 @@
-require_relative 'rolodex'
 require 'sinatra'
 require "sinatra/reloader"
 require 'pry'
@@ -14,24 +13,12 @@ class Contact
   property :last_name, String
   property :email, String
   property :note, String
-
- 
-#   attr_accessor :id, :first_name, :last_name, :email, :note
-
-#   def initialize(first_name, last_name, email, note)
-#     @id = nil
-#     @first_name = first_name
-#     @last_name = last_name
-#     @email = email
-#     @note = note
-#   end
 end
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
 # end of datamapper setup
-$rolodex = Rolodex.new
 
 
 #begin sinatra routes
@@ -83,7 +70,7 @@ end
 
 
 get "/contacts/:id/edit" do
-  @contact = $rolodex.find(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
     erb :edit_contact
   else
@@ -92,9 +79,9 @@ get "/contacts/:id/edit" do
 end
 
 delete "/contacts/:id" do
-  @contact = $rolodex.find(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
+  @contact.destroy
   if @contact
-    $rolodex.remove_contact(@contact)
     redirect to("/contacts")
   else
     raise Sinatra::NotFound
