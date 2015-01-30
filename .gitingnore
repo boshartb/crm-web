@@ -1,0 +1,3 @@
+# IGNORE  the default SQ lite database
+/*.sqlite3
+/*.sqlite3-journal
