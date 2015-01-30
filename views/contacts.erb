@@ -6,6 +6,7 @@
     <li>
     <%= contact.first_name %> <%= contact.last_name %> <%= contact.email %> <%contact.note %>
 	<a href="/contacts/<%= contact.id %>">Details</a>
+	<a href="/contacts/<%= contact.id %>">Edit</a>
     </li>
   <% end %>
 </ul>
