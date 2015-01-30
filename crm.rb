@@ -9,18 +9,26 @@ DataMapper.setup(:default, "sqlite3:database.sqlite3")
 class Contact
   include DataMapper::Resource
 
-  attr_accessor :id, :first_name, :last_name, :email, :note
+  property :id, Serial 
+  property :first_name, String
+  property :last_name, String
+  property :email, String
+  property :note, String
 
-  def initialize(first_name, last_name, email, note)
-    @id = nil
-    @first_name = first_name
-    @last_name = last_name
-    @email = email
-    @note = note
-  end
+ 
+#   attr_accessor :id, :first_name, :last_name, :email, :note
+
+#   def initialize(first_name, last_name, email, note)
+#     @id = nil
+#     @first_name = first_name
+#     @last_name = last_name
+#     @email = email
+#     @note = note
+#   end
 end
 
-
+DataMapper.finalize
+DataMapper.auto_upgrade!
 
 # end of datamapper setup
 $rolodex = Rolodex.new
